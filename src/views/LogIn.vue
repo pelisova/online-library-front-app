@@ -30,8 +30,17 @@ export default {
             password: '',
         }
     },
+    computed: {
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        },
+    },
+    created() {
+        if (this.loggedIn) {
+            this.$router.push("/");
+        }
+    },
     methods: {
-        ...mapMutations(['setUser', 'setToken']),
         LogIn(e) {
             e.preventDefault();
 
@@ -46,22 +55,22 @@ export default {
             this.logUser(logUserdata);
         },
 
-        async logUser(logUserdata) {
-            const response = await axios.post(`${server.baseURL}/user/signin`, logUserdata).catch(err => console.log(`${err}`+ '. Please check your credentials!'));
-            if(response === undefined) {
-                this.$toast.error('Please check your credentials!');
-            }
-            else {
-                 //console.log(response);
-                 console.log('User:', response.data[0]);
-                 console.log('AccessToken:', response.data[1].accessToken);
-                //  const user = response.data[0];
-                //  const token =  response.data[1].accessToken;
-                //  this.setUser(user);
-                //  this.setToken(token);
+        async logUser(user) {
+            this.$store.dispatch("auth/login", user).then(
+            () => {
                  this.$router.push('/');
                  this.$toast.success('You are successfuly logged in!');
-            }
+            },
+            (error) => {
+                const message =
+                    (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                    this.$toast.error('Please check your credentials! ', message);
+                }
+            );
         }
     }
 }

@@ -8,28 +8,42 @@
 import SignUp from '../components/SignUp.vue';
 import axios from 'axios';
 import { server } from '../helper'
-// import { $router } from '../router/index'
 
 export default {
     name: 'Registration',
     components: {
         SignUp,
     },
+    computed: {
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        },
+    },
+    mounted() {
+        if (this.loggedIn) {
+            this.$router.push("/");
+        }
+    },
     methods: {
         async signUp(user) {
-            const response = await axios.post(`${server.baseURL}/user/signup`, user).catch(err => console.log(err));
-            // console.log(response);
-            if(response !== undefined) {
-                console.log('successfuly!');
+            this.$store.dispatch("auth/register", user).then(
+            (data) => {
                 this.$router.push('/');
                 this.$toast.success('Thank you for being part of us!');
-            }
-            else{
-                console.log('Oops! Try again');
-                this.$toast.error('Your email is already in use !')
-            }
+            },
+            (error) => {
+                const message =
+                    (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                    this.$toast.error('Your email is already in use!. ', message);
+                }
+            );
             
         }
+        
     }
 }
 </script>
