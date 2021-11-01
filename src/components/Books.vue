@@ -125,11 +125,11 @@ img {
   border-radius: 10px;
   background-color: rgb(134, 146, 212);
   color: white;
-  text-align: center;
   font-weight: bolder;
   cursor: pointer;
-  width: 10%;
+  width: 12%;
   border: 3px solid #5C4033;
+  justify-content: center;
 }
 
 </style>

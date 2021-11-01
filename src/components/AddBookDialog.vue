@@ -10,7 +10,18 @@
                 <input type="text" v-model="title" id="title" class="fadeIn second" name="title" placeholder="title" required>
                 <input type="text" v-model="author" id="author" class="fadeIn second" name="author" placeholder="author" required>
                 <input type="text" v-model="publisher" id="publisher" class="fadeIn second" name="publisher" placeholder="publisher" required>
-                <input type="text" v-model="category" id="category" class="fadeIn second" name="category" placeholder="category" required>
+                
+                     <select name="category" @change="onChange($event)" class="form-select form-control btn btn-secondary dropdown-toggle" v-model="category" required>
+                        <option value="">Category</option>
+                        <option value="action">Action</option>
+                        <option value="classic">Classic</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="horor">Horor</option>
+                        <option value="romance">Romance</option>
+                        <option value="drama">Drama</option>
+                    </select>
+
                 <input type="text" v-model="printingHouse" id="printingHouse" class="fadeIn third" name="printingHouse" placeholder="printingHouse" required>
                 <button class="fadeIn fourth" @click="close">Cancel</button>
                 <input type="submit" class="fadeIn fourth" value="Add">
@@ -51,6 +62,7 @@ import {closeModal} from "jenesius-vue-modal";
                     printingHouse: this.printingHouse,
                     status: 'A'
                 }
+                console.log(newBook);
 
                 this.addNewBook(newBook);
                 },
@@ -62,6 +74,9 @@ import {closeModal} from "jenesius-vue-modal";
             },
             close() {
                 closeModal();
+            }, 
+            onChange(event) {
+                this.category = event.target.value;
             }
 
         }
@@ -333,6 +348,11 @@ input[type=text]:placeholder {
   width:10%;
   margin-bottom: 1em;
   margin-top: 1em;
+}
+
+.dropdown-toggle {
+    width: 85%;
+    margin-bottom: 5px;
 }
 
 </style>

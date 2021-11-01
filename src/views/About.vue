@@ -1,4 +1,5 @@
 <template>
+     <br><br>
      <h2> Lorem Ipsum </h2>
 
     <div class="intro">

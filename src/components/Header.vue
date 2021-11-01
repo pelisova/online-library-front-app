@@ -100,6 +100,10 @@ nav ul li a{
 .sign{
    margin-left: 5em;
 }
+
+nav ul li a:not([href]):not([class]) {
+  color: white
+}
 nav ul li a.active,
 nav ul li a:hover{
   color: #111;
