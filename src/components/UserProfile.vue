@@ -1,10 +1,10 @@
 <template>
-    <h1>{{currentUser.firstName}}, welcome to online library</h1><hr class="hr">
+    <h1 v-if="currentUser">{{currentUser.firstName}}, welcome to online library</h1>
     <br><br>
 
-    <div class="container">
+    <div v-if="currentUser" class="container">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <div class="row">
+        <div v-if="books.length > 0" class="row">
             <h3>History of your books:</h3> <hr class="hr"> 
             <ul class="listrap">
                 <li v-for="book in books" v-bind:key="book.id">
@@ -18,22 +18,22 @@
             </ul>
         </div>
 
-        <!-- <div v-if="currentUser && (currentUser.role === 'L' || currentUser.role === 'A')">
+        <br> <br>
+
+        <div v-if="(currentUser.role === 'L' || currentUser.role === 'A') && unverifiedUsers.length > 0" class="row">
             <h3>Users to be verified:</h3> <hr class="hr"> 
 
-            <!pokazi list membera to be verified>
-
-             <<ul class="listrap">
-                <li v-for="unverifedUser in unverifiedUsers" v-bind:key="book.id">
+             <ul class="listrap">
+                <li v-for="user in unverifiedUsers" v-bind:key="user.id">
                     <div class="listrap-toggle">
                         <span></span>
-                        <img src="../assets/icon-books.png" class="img-circle" />
+                        <img src="../assets/user.png" class="img-circle" />
                     </div>
-                    <strong>{{book.title}}</strong>
-                    <button class="icon-btn">Preview</button>
+                    <strong>{{user.firstName}} {{user.lastName}}</strong>
+                    <button class="icon-verify" @click="verify(user.id)">Verify</button>
                 </li> 
-            </ul> -->
-        <!-- </div> --> 
+            </ul>
+        </div> 
 
     </div>
 
@@ -49,6 +49,7 @@ export default {
     data() {
         return {
             books:[],
+            unverifiedUsers:[],
         }
     },
     computed: {
@@ -56,18 +57,25 @@ export default {
             return this.$store.state.auth.user;
             }
         },
-    mounted() {
-        if (!this.currentUser) {
-            this.$router.push('/login');
-        }
-    },
     created() {
         axios.get(API_URL + 'user/history', { headers: authHeader() }).then((response)=>{
             this.books = response.data;
         }).catch(error => console.log(error));
+        this.loadUnverified();
     },
     methods: {
-
+        verify(userId) {
+            axios.patch(API_URL + 'user/verify/' + userId, {}, { headers: authHeader() }).then(()=>{
+                this.$router.push('userProfile');
+                this.$toast.success('User successfully verified!');
+                this.loadUnverified();
+            }).catch(error => this.$toast.error('Oops! Something went wrong! ', error));
+        },
+        loadUnverified() {  
+            axios.get(API_URL + 'user/getUnverifiedUsers', { headers: authHeader() }).then((response)=>{
+                this.unverifiedUsers = response.data;
+            }).catch(error => console.log(error));
+        }
     }
 }
 </script>
@@ -79,9 +87,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50%;
-    margin-left: -30%;
-    /* border: 3px solid #5C4033; */
+    width: 100%;
 }
 
 .img-circle{
@@ -98,14 +104,27 @@ export default {
 
  .icon-btn { 
   margin-bottom: 1em;
-  margin-left: 8em;
+  margin-left: 5em;
   padding: 3px;
   border-radius: 10px;
   background-color: rgb(18, 181, 230);
   color: #fdffff;
   text-align: center;
   font-weight: bolder;
-  width: 20%;
+  cursor: pointer;
+  border: 1px solid #5C4033;
+  width: 10%;
+}
+
+.icon-verify { 
+  margin-bottom: 1em;
+  margin-left: 8em;
+  padding: 3px;
+  border-radius: 10px;
+  background-color: rgb(81, 161, 112);
+  color: #fdffff;
+  text-align: center;
+  font-weight: bolder;
   cursor: pointer;
   border: 1px solid #5C4033;
 }
@@ -137,7 +156,7 @@ export default {
 
         .listrap .listrap-toggle {
             display: inline-block;
-            width: 60px;
+            width: 7%;
             height: 60px;
         }
 
