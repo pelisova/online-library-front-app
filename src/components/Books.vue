@@ -1,17 +1,21 @@
 <template>
     <h1> Books</h1>    
 
+    <div v-if="currentUser && (currentUser.role === 'A' || currentUser.role === 'A')">
+      <button  class="addBook" @click="addOpen">Add Book</button>
+    </div>
     <div class="card-container">
-     
       <div class="card card-space" v-for="book in books" v-bind:key="book.id">
           <img src="../assets/icon-books.png" alt="Avatar" style="width:100%">
           <div class="container">
-              <h4><b> {{ book.title }}</b></h4> 
+              <p><b> {{ book.title }}</b></p> 
               <p>{{ book.author }}</p> 
           </div>
          <button v-if="currentUser" class="btn icon-btn btn-primary" @click="rentBook(book.id)">Rent</button>
       </div>
     </div>  
+
+    
    
 </template>
 
@@ -20,9 +24,12 @@ import BookService from '../services/book.service'
 import authHeader from '../services/auth-header';
 import { API_URL } from '../helper'
 import axios from 'axios';
+import {openModal, onclose} from "jenesius-vue-modal";
+import AddBookDialog from "../components/AddBookDialog.vue"
 
 export default {
     name: 'Books',
+
     data() {
         return {
             books: [],
@@ -34,7 +41,11 @@ export default {
     },
   },
   created() {
-        BookService.getAllBooks().then(
+      this.getAllBooks();
+  },
+  methods: {
+    getAllBooks() {
+       BookService.getAllBooks().then(
         (response) => { 
             this.books = response.data;
         },
@@ -47,15 +58,17 @@ export default {
             error.toString();
         }
       );
-  },
-  methods: {
+    },
     rentBook(bookId) {
       axios.patch(API_URL + 'book/rent/book/' + bookId, {}, { headers: authHeader() }).then(()=>{
         this.$router.push('userProfile');
         this.$toast.success('Book is successfully rented!');
       }).catch(error => this.$toast.error('Oops! Something went wrong! ', error));
-    }
-
+    },
+    async addOpen() {
+      const modal = await openModal(AddBookDialog);
+      modal.onclose = () => {this.getAllBooks()}
+    },
   }
 }
 </script>
@@ -73,6 +86,8 @@ export default {
   border-radius: 5px;
   background-color: white;
   cursor: pointer;
+  position: initial;
+  display: block;
 }
 .card-space{
   margin: 1em;
@@ -99,6 +114,21 @@ img {
   font-weight: bolder;
   width: 50%;
   cursor: pointer;
+  border: 3px solid #5C4033;
+}
+
+.addBook  { 
+  display: flex;
+  flex-direction: row;
+  margin-left: 110%;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgb(134, 146, 212);
+  color: white;
+  text-align: center;
+  font-weight: bolder;
+  cursor: pointer;
+  width: 10%;
   border: 3px solid #5C4033;
 }
 
