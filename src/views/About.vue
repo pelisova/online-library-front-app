@@ -1,14 +1,14 @@
 <template>
      <h2> Lorem Ipsum </h2>
 
-    <div>
+    <div class="intro">
         <span>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
         "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
         </span>
     </div>   
     <hr> 
 
-<p>
+<p class="about-container">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed sodales leo, vel fermentum ante. Vestibulum nulla risus, pretium at turpis sed, convallis suscipit dui. Nunc mauris lorem, dignissim ut ornare eu, feugiat eget diam. Nam accumsan faucibus nunc, quis varius quam feugiat non. Etiam convallis arcu et diam sodales, nec semper leo sollicitudin. Nunc id finibus tellus. Cras sit amet diam non arcu condimentum cursus. Duis eu egestas felis, et ornare lectus. Duis nec neque tellus. Sed iaculis sapien consequat, maximus mauris id, rhoncus sapien. Vivamus a tortor efficitur, sollicitudin ipsum ut, suscipit nunc. Aliquam ut viverra diam. Pellentesque hendrerit euismod lacus, nec volutpat nulla facilisis ut. Nam sodales, erat at porttitor feugiat, ante est egestas mauris, eu tincidunt ipsum lectus et elit. Proin aliquet auctor sem in laoreet.
 
 Vivamus sed ex a dolor vulputate scelerisque eget vel ex. Aenean urna ex, molestie sit amet erat sed, tempus lobortis tortor. Praesent lacinia nibh at mauris commodo suscipit. Praesent lacinia felis quis odio auctor, eu egestas erat tristique. Curabitur sed faucibus lorem, a interdum risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean luctus diam at ex euismod posuere. Quisque vitae commodo eros. Ut et mollis eros. Suspendisse potenti. Nam posuere, felis eget congue elementum, nulla lacus mollis odio, ac sollicitudin eros enim rutrum neque. Nunc at erat libero. Ut mattis nibh in magna semper, a tempus diam interdum.
@@ -34,6 +34,10 @@ export default {
 
 <style scoped>
 
+.about-container{
+    width: 100%;
+}
+
 a {
   background-color: #555555;
   border: none;
@@ -58,12 +62,12 @@ h3{
     margin-top: 3em;
 }
 
-div{
+.intro{
     font-style: italic;
     text-align: center;
     font-weight: bolder;
-    margin-left: 18em;
-    margin-right: 18em;
+    margin-left: 10em;
+    margin-right: 10em;
     display: flex;
     flex-direction: column;
 }
@@ -72,8 +76,6 @@ p{
     display: flex;
     flex-direction: column;
     text-align: justify;
-    margin-left: 10em;
-    margin-right: 10em;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.2em;
     color:black;

@@ -2,7 +2,9 @@ import {createRouter, createWebHistory} from 'vue-router';
 import About from '../views/About';
 import Registration from '../views/Registration';
 import Home from '../views/Home';
-import LogIn from '../views/LogIn'
+import LogIn from '../views/LogIn';
+import UserProfile from '../components/UserProfile';
+import Books from '../components/Books';
 
 const routes = [
     {
@@ -25,6 +27,16 @@ const routes = [
         name: 'LogIn',
         component: LogIn,
     },
+    {
+        path: '/userProfile',
+        name: 'UserProfile',
+        component: UserProfile,
+    },
+    {
+        path: '/books',
+        name: 'Books',
+        component: Books,
+    },
     
 ]
 
@@ -34,7 +46,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/signUp', '/', '/about'];
+    const publicPages = ['/login', '/signUp','/about', '/', '/books'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('library_token');
   

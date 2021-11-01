@@ -1,6 +1,8 @@
 <template>
       <Header/>
-      <router-view/>
+      <div class="main-container">
+        <router-view/>
+      </div>
       <Footer/>
 </template>
 
@@ -14,16 +16,24 @@ export default {
     components: {
         Header,
         Footer,
+    },
+    methods: {
+
     }
 }
 </script>
 
 <style>
 body{
-  background-color: #F3F3F3; 
-  background-image: url("./assets/back4.png");
+  background-color: #F2F2F2; 
+  /* background-image: url("./assets/back4.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
+}
+
+.main-container{
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 #app {

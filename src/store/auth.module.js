@@ -36,7 +36,21 @@ export const auth = {
           return Promise.reject(error);
         }
       );
+    },
+    getUserByEmail({commit},email) {
+      AuthService.getUserByEmail(email).then(
+        response => {
+          commit('loginSuccess', response);
+          return Promise.resolve(response.data);
+        },
+        (error) => {
+          commit('loginFailure');
+          localStorage.removeItem('library_token');
+          return Promise.reject(error);
+        }
+      );
     }
+
   },
   mutations: {
     loginSuccess(state, data) {
@@ -56,6 +70,6 @@ export const auth = {
     },
     registerFailure(state) {
       state.status.loggedIn = false;
-    }
+    },
   }
 };

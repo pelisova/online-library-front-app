@@ -6,8 +6,6 @@
 
 <script>
 import SignUp from '../components/SignUp.vue';
-import axios from 'axios';
-import { server } from '../helper'
 
 export default {
     name: 'Registration',
@@ -21,8 +19,9 @@ export default {
     },
     mounted() {
         if (this.loggedIn) {
-            this.$router.push("/");
-        }
+            this.$router.push("/login");
+            this.$toast.info('You are already logged in!');
+            this.$toast.clear();        }
     },
     methods: {
         async signUp(user) {

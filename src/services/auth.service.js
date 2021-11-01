@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../helper'
+import authHeader from './auth-header';
 
 class AuthService {
   login(user) {
@@ -27,6 +28,12 @@ class AuthService {
       lastName: user.lastName,  
       email: user.email,
       password: user.password
+    });
+  }
+
+  getUserByEmail(email) {
+    return axios.get(API_URL + 'user/getByEmail/' + email, { headers: authHeader() }).then(response => {
+      return response.data
     });
   }
 }

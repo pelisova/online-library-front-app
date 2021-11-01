@@ -42,7 +42,10 @@ export default {
             }
             myIndex++;
             if (myIndex > x.length) {myIndex = 1}  
-            x[myIndex-1].style.display = "block"; 
+            const element = x[myIndex-1];
+            if (element) {
+                element.style.display = "block"; 
+            }
             setTimeout(this.carousel, 5000) 
         },
         scrollToTop() {

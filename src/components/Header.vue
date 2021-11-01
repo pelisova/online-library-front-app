@@ -10,22 +10,47 @@
          </label>
          <ul>
             <li><router-link class="active" to="/"> Home </router-link></li>
-            <li><router-link to="#"> Books </router-link></li>
-            <li><router-link to="/About"> About </router-link></li>
-             <li> <router-link class="sign" to="/login"> Log In </router-link></li>
-            <li> <router-link to="/signUp"> Sign Up </router-link></li>
+            <li><router-link to="/books" @load="getAll"> Books </router-link></li>
+            <li><router-link to="/about"> About </router-link></li>
+             <li v-if="!currentUser"> <router-link class="sign" to="/login"> Log In </router-link></li>
+            <li v-if="!currentUser"> <router-link to="/signUp"> Sign Up </router-link></li>
+            
+              <li v-if="currentUser"><router-link class="sign" to="/userProfile">{{ currentUser.firstName }}</router-link></li>
+              <li v-if="currentUser"><a @click="logout">LogOut</a ></li>
          </ul>
       </nav>
 </template>
 
 <script>
 
-import { mapGetters } from "vuex";
-
 export default {
+  name: 'Header',
   computed: {
-    ...mapGetters(["isLoggedIn"])
-  }
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+  created() {
+    let token = JSON.parse(localStorage.getItem('library_token'));
+    if(!this.currentUser && token) {
+        let payload = JSON.parse(atob(token.split('.')[1]));
+
+        this.$store.dispatch("auth/getUserByEmail", payload.email).then(
+            () => {},
+            (error) => {
+              this.$router.push('/login');
+                }
+        );
+    }
+  },
+  methods: {
+    logout(){
+             this.$store.dispatch("auth/logout").then(()=> {
+                 this.$router.push('/');
+             })
+        },
+       
+  }  
 }
 </script>
 
@@ -41,7 +66,7 @@ nav{
   display: flex;
   height: 60px;
   width: 100%;
-  background: #1b1b1b;
+  background:#5C4033;
   align-items: center;
   justify-content: space-between;
   padding: 0 50px 0 100px;
@@ -70,6 +95,7 @@ nav ul li a{
   border-radius: 5px;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 .sign{
    margin-left: 5em;
