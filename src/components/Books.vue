@@ -50,12 +50,8 @@ export default {
             this.books = response.data;
         },
         (error) => {
-            this.books =
-            (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-            error.message ||
-            error.toString();
+            console.log(error.message);
+            this.$toast.warning('No available books!');
         }
       );
     },
