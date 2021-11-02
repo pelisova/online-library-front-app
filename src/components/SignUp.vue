@@ -1,28 +1,4 @@
 <template>
-    <!-- <form @submit="onSubmit" class="add-form">
-    <div class="form-control">
-      <label>First Name</label>
-      <input type="text" v-model="firstName" name="firstName" placeholder="First Name" required />
-    </div>
-
-    <div class="form-control">
-      <label>Last Name</label>
-      <input type="text" v-model="lastName" name="lastName" placeholder="First Name" required/>
-    </div>
-
-    <div class="form-control">
-      <label>Email</label>
-      <input type="text" v-model="email" name="email" placeholder="Your email" required/>
-    </div>
-
-    <div class="form-control">
-      <label>Password</label>
-      <input type="text" v-model="password" name="password" placeholder="Your password" required />
-    </div>
-
-    <input type="submit" value="Sign Up" class="btn" />
-  </form> -->
-
   <div class="wrapper fadeInDown">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <div id="formContent">

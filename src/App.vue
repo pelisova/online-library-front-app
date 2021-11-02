@@ -28,10 +28,7 @@ export default {
 
 <style>
 body{
-  background-color: #F2F2F2; 
-  /* background-image: url("./assets/back4.png");
-  background-repeat: no-repeat;
-  background-size: cover; */
+  background-color: #F2F2F2;
 }
 
 .main-container{

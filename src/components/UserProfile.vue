@@ -175,10 +175,4 @@ export default {
             color: #ffffff;
         }
 
-        /* .listrap .listrap-toggle span:before {
-            font-family: 'Glyphicons Halflings';
-            content: "\e013";
-        } */
-     
-       
 </style>

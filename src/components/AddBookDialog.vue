@@ -62,9 +62,8 @@ import {closeModal} from "jenesius-vue-modal";
                     printingHouse: this.printingHouse,
                     status: 'A'
                 }
-                console.log(newBook);
 
-                this.addNewBook(newBook);
+                    this.addNewBook(newBook);
                 },
                 addNewBook(newBook) {
                 axios.post(API_URL + 'book/add', newBook, { headers: authHeader() }).then(()=>{
